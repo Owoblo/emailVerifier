@@ -524,6 +524,96 @@
             display: block;
         }
 
+        /* Mode Selector */
+        .mode-selector {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            border: 1px solid var(--border-subtle);
+            border-radius: 100px;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .mode-selector:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-1px);
+        }
+
+        .mode-icon {
+            font-size: 1.1rem;
+        }
+
+        .mode-arrow {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        /* Dropdown Menu */
+        .mode-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 8px;
+            background: white;
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            box-shadow: var(--shadow-soft);
+            min-width: 200px;
+            z-index: 1000;
+        }
+
+        .dropdown-content.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        .dropdown-item:first-child {
+            border-radius: 12px 12px 0 0;
+        }
+
+        .dropdown-item:last-child {
+            border-radius: 0 0 12px 12px;
+        }
+
+        .dropdown-item:hover {
+            background: #f8fafc;
+        }
+
+        .dropdown-item.active {
+            background: #f1f5f9;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .mode-description {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
         @media (max-width: 768px) {
             .results-split {
                 grid-template-columns: 1fr;
@@ -543,14 +633,46 @@
     <div class="hero">
         <div class="badge-announcement">
             <div class="dot"></div>
-            Deep SMTP Verification
+            <span id="heroBadge">Quick Email Verification</span>
         </div>
-        <h1>Verify Your<br><span>Email List</span></h1>
-        <p class="subtitle">Paste your email list and instantly verify deliverability with deep SMTP checks. Get clean, validated contacts ready for your outreach.</p>
+        <h1 id="heroTitle">Verify Your<br><span>Email List</span></h1>
+        <p class="subtitle" id="heroSubtitle">Paste your email list and instantly verify deliverability with deep SMTP checks. Get clean, validated contacts ready for your outreach.</p>
     </div>
 
-    <!-- ChatGPT-style Input -->
-    <div class="input-container">
+    <!-- Mode Selector -->
+    <div class="mode-dropdown">
+        <div class="mode-selector" onclick="toggleModeDropdown()">
+            <span class="mode-icon" id="modeIcon">⚡</span>
+            <span id="modeName">Quick Verify</span>
+            <span class="mode-arrow">▼</span>
+        </div>
+        <div class="dropdown-content" id="modeDropdown">
+            <div class="dropdown-item active" onclick="switchToMode('verify')">
+                <span>⚡</span>
+                <div>
+                    <div>Quick Verify</div>
+                    <div class="mode-description">Fast email validation</div>
+                </div>
+            </div>
+            <div class="dropdown-item" onclick="switchToMode('research')">
+                <span>🧠</span>
+                <div>
+                    <div>Deep Research</div>
+                    <div class="mode-description">AI-powered email discovery</div>
+                </div>
+            </div>
+            <div class="dropdown-item" onclick="switchToMode('enrich')" style="opacity: 0.5; cursor: not-allowed;">
+                <span>📈</span>
+                <div>
+                    <div>Smart Enrich</div>
+                    <div class="mode-description">Coming soon...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Verify Mode -->
+    <div class="input-container" id="verifyMode" style="display: block;">
         <div class="input-wrapper">
             <div class="input-box" id="inputBox">
                 <textarea id="emailList" placeholder="Paste your email list here..."></textarea>
@@ -569,6 +691,37 @@
 
                     <button id="verifyBtn" class="action-btn" onclick="verifyEmails()" title="Verify Emails">
                         <span>Verify</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deep Research Mode -->
+    <div class="input-container" id="researchMode" style="display: none;">
+        <div class="input-wrapper">
+            <div class="input-box" id="researchInputBox">
+                <textarea id="researchInput" placeholder="Tell me what you need...
+
+Examples:
+• Find email for CEO of Tesla
+• John Doe at Microsoft
+• CTO of Stripe
+• jane@company.com (verify)
+
+I'll use AI to find, generate, and verify emails."></textarea>
+
+                <div class="control-bar">
+                    <div class="options">
+                        <div class="option-pill">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"></path></svg>
+                            <input type="password" id="apiKeyInput" placeholder="OpenAI API Key (sk-...)" style="border: none; background: transparent; outline: none; font-family: monospace; font-size: 0.85rem; width: 180px;">
+                        </div>
+                    </div>
+
+                    <button id="researchBtn" class="action-btn" onclick="deepResearch()" title="Deep Research">
+                        <span>Research</span>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     </button>
                 </div>
@@ -628,16 +781,93 @@
 
     <script>
         let verifiedEmails = [];
+        let currentMode = 'verify';
+        let apiKey = localStorage.getItem('openai_api_key') || '';
+
+        // Load API key
+        if (apiKey) {
+            document.getElementById('apiKeyInput').value = apiKey;
+        }
 
         // Auto-expand textarea when content is pasted
         const textarea = document.getElementById('emailList');
         const inputBox = document.getElementById('inputBox');
+        const researchTextarea = document.getElementById('researchInput');
+        const researchInputBox = document.getElementById('researchInputBox');
 
         textarea.addEventListener('input', function() {
-            // Auto-expand textarea
             this.style.height = '60px';
             this.style.height = Math.min(this.scrollHeight, 400) + 'px';
         });
+
+        researchTextarea.addEventListener('input', function() {
+            this.style.height = '60px';
+            this.style.height = Math.min(this.scrollHeight, 400) + 'px';
+        });
+
+        // Save API key on input
+        document.getElementById('apiKeyInput').addEventListener('change', function() {
+            const key = this.value.trim();
+            if (key.startsWith('sk-')) {
+                localStorage.setItem('openai_api_key', key);
+                apiKey = key;
+            }
+        });
+
+        // Mode switcher
+        function toggleModeDropdown() {
+            const dropdown = document.getElementById('modeDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        window.addEventListener('click', function(e) {
+            if (!e.target.closest('.mode-dropdown')) {
+                document.getElementById('modeDropdown').classList.remove('show');
+            }
+        });
+
+        function switchToMode(mode) {
+            if (mode === 'enrich') return; // Coming soon
+
+            currentMode = mode;
+            document.getElementById('modeDropdown').classList.remove('show');
+
+            // Update mode selector
+            const modeIcon = document.getElementById('modeIcon');
+            const modeName = document.getElementById('modeName');
+            const heroBadge = document.getElementById('heroBadge');
+            const heroTitle = document.getElementById('heroTitle');
+            const heroSubtitle = document.getElementById('heroSubtitle');
+
+            // Update active state in dropdown
+            document.querySelectorAll('.dropdown-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            if (mode === 'verify') {
+                modeIcon.textContent = '⚡';
+                modeName.textContent = 'Quick Verify';
+                heroBadge.textContent = 'Quick Email Verification';
+                heroTitle.innerHTML = 'Verify Your<br><span>Email List</span>';
+                heroSubtitle.textContent = 'Paste your email list and instantly verify deliverability with deep SMTP checks. Get clean, validated contacts ready for your outreach.';
+                document.getElementById('verifyMode').style.display = 'block';
+                document.getElementById('researchMode').style.display = 'none';
+                document.querySelectorAll('.dropdown-item')[0].classList.add('active');
+            } else if (mode === 'research') {
+                modeIcon.textContent = '🧠';
+                modeName.textContent = 'Deep Research';
+                heroBadge.textContent = 'AI-Powered Email Discovery';
+                heroTitle.innerHTML = 'Discover &<br><span>Verify Emails</span>';
+                heroSubtitle.textContent = 'Use AI to find emails, generate patterns, and verify deliverability. Just describe what you need in natural language.';
+                document.getElementById('verifyMode').style.display = 'none';
+                document.getElementById('researchMode').style.display = 'block';
+                document.querySelectorAll('.dropdown-item')[1].classList.add('active');
+            }
+
+            // Hide results
+            document.getElementById('resultsArea').style.display = 'none';
+        }
 
         async function verifyEmails() {
             const emailList = document.getElementById('emailList').value.trim();
@@ -776,10 +1006,53 @@
             }, 2000);
         }
 
-        // Keyboard shortcut: Cmd/Ctrl + Enter to verify
+        // Deep Research function
+        async function deepResearch() {
+            const input = document.getElementById('researchInput').value.trim();
+            const btn = document.getElementById('researchBtn');
+
+            if (!input) return;
+
+            if (!apiKey || !apiKey.startsWith('sk-')) {
+                alert('Please enter your OpenAI API key first!');
+                document.getElementById('apiKeyInput').focus();
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<svg class="spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg><span>Researching...</span>';
+
+            try {
+                const response = await fetch('/api/smart-lookup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ input, level: 'smtp', apiKey })
+                });
+
+                if (!response.ok) throw new Error('Server error');
+                const data = await response.json();
+
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    renderResults(data.results);
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<span>Research</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+            }
+        }
+
+        // Keyboard shortcut: Cmd/Ctrl + Enter
         document.addEventListener('keydown', function(e) {
             if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
-                verifyEmails();
+                if (currentMode === 'verify') {
+                    verifyEmails();
+                } else if (currentMode === 'research') {
+                    deepResearch();
+                }
             }
         });
     </script>
