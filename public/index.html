@@ -533,13 +533,11 @@
             border: 1px solid var(--border-subtle);
             border-radius: 100px;
             padding: 8px 16px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
             color: var(--text-primary);
             cursor: pointer;
             transition: all 0.2s;
-            margin-bottom: 30px;
-            box-shadow: var(--shadow-card);
         }
 
         .mode-selector:hover {
@@ -639,38 +637,6 @@
         <p class="subtitle" id="heroSubtitle">Paste your email list and instantly verify deliverability with deep SMTP checks. Get clean, validated contacts ready for your outreach.</p>
     </div>
 
-    <!-- Mode Selector -->
-    <div class="mode-dropdown">
-        <div class="mode-selector" onclick="toggleModeDropdown()">
-            <span class="mode-icon" id="modeIcon">⚡</span>
-            <span id="modeName">Quick Verify</span>
-            <span class="mode-arrow">▼</span>
-        </div>
-        <div class="dropdown-content" id="modeDropdown">
-            <div class="dropdown-item active" onclick="switchToMode('verify')">
-                <span>⚡</span>
-                <div>
-                    <div>Quick Verify</div>
-                    <div class="mode-description">Fast email validation</div>
-                </div>
-            </div>
-            <div class="dropdown-item" onclick="switchToMode('research')">
-                <span>🧠</span>
-                <div>
-                    <div>Deep Research</div>
-                    <div class="mode-description">AI-powered email discovery</div>
-                </div>
-            </div>
-            <div class="dropdown-item" onclick="switchToMode('enrich')" style="opacity: 0.5; cursor: not-allowed;">
-                <span>📈</span>
-                <div>
-                    <div>Smart Enrich</div>
-                    <div class="mode-description">Coming soon...</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Quick Verify Mode -->
     <div class="input-container" id="verifyMode" style="display: block;">
         <div class="input-wrapper">
@@ -679,6 +645,38 @@
 
                 <div class="control-bar">
                     <div class="options">
+                        <!-- Mode Selector -->
+                        <div class="mode-dropdown">
+                            <div class="mode-selector" onclick="toggleModeDropdown(event)">
+                                <span class="mode-icon" id="modeIcon">⚡</span>
+                                <span id="modeName">Quick Verify</span>
+                                <span class="mode-arrow">▼</span>
+                            </div>
+                            <div class="dropdown-content" id="modeDropdown">
+                                <div class="dropdown-item active" onclick="switchToMode('verify')">
+                                    <span>⚡</span>
+                                    <div>
+                                        <div>Quick Verify</div>
+                                        <div class="mode-description">Fast email validation</div>
+                                    </div>
+                                </div>
+                                <div class="dropdown-item" onclick="switchToMode('research')">
+                                    <span>🧠</span>
+                                    <div>
+                                        <div>Deep Research</div>
+                                        <div class="mode-description">AI-powered email discovery</div>
+                                    </div>
+                                </div>
+                                <div class="dropdown-item" onclick="switchToMode('enrich')" style="opacity: 0.5; cursor: not-allowed;">
+                                    <span>📈</span>
+                                    <div>
+                                        <div>Smart Enrich</div>
+                                        <div class="mode-description">Coming soon...</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="option-pill">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
                             <select id="verifyLevel">
@@ -714,6 +712,38 @@ I'll use AI to find, generate, and verify emails."></textarea>
 
                 <div class="control-bar">
                     <div class="options">
+                        <!-- Mode Selector (same dropdown, different instance for research mode) -->
+                        <div class="mode-dropdown">
+                            <div class="mode-selector" onclick="toggleModeDropdown(event)">
+                                <span class="mode-icon" id="modeIcon2">🧠</span>
+                                <span id="modeName2">Deep Research</span>
+                                <span class="mode-arrow">▼</span>
+                            </div>
+                            <div class="dropdown-content" id="modeDropdown2">
+                                <div class="dropdown-item" onclick="switchToMode('verify')">
+                                    <span>⚡</span>
+                                    <div>
+                                        <div>Quick Verify</div>
+                                        <div class="mode-description">Fast email validation</div>
+                                    </div>
+                                </div>
+                                <div class="dropdown-item active" onclick="switchToMode('research')">
+                                    <span>🧠</span>
+                                    <div>
+                                        <div>Deep Research</div>
+                                        <div class="mode-description">AI-powered email discovery</div>
+                                    </div>
+                                </div>
+                                <div class="dropdown-item" onclick="switchToMode('enrich')" style="opacity: 0.5; cursor: not-allowed;">
+                                    <span>📈</span>
+                                    <div>
+                                        <div>Smart Enrich</div>
+                                        <div class="mode-description">Coming soon...</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="option-pill">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"></path></svg>
                             <input type="password" id="apiKeyInput" placeholder="OpenAI API Key (sk-...)" style="border: none; background: transparent; outline: none; font-family: monospace; font-size: 0.85rem; width: 180px;">
@@ -815,15 +845,26 @@ I'll use AI to find, generate, and verify emails."></textarea>
         });
 
         // Mode switcher
-        function toggleModeDropdown() {
-            const dropdown = document.getElementById('modeDropdown');
+        function toggleModeDropdown(event) {
+            event.stopPropagation();
+            const dropdown = event.target.closest('.mode-dropdown').querySelector('.dropdown-content');
+            const otherDropdowns = document.querySelectorAll('.dropdown-content');
+
+            // Close other dropdowns
+            otherDropdowns.forEach(d => {
+                if (d !== dropdown) d.classList.remove('show');
+            });
+
+            // Toggle current dropdown
             dropdown.classList.toggle('show');
         }
 
         // Close dropdown when clicking outside
         window.addEventListener('click', function(e) {
             if (!e.target.closest('.mode-dropdown')) {
-                document.getElementById('modeDropdown').classList.remove('show');
+                document.querySelectorAll('.dropdown-content').forEach(d => {
+                    d.classList.remove('show');
+                });
             }
         });
 
@@ -831,16 +872,22 @@ I'll use AI to find, generate, and verify emails."></textarea>
             if (mode === 'enrich') return; // Coming soon
 
             currentMode = mode;
-            document.getElementById('modeDropdown').classList.remove('show');
 
-            // Update mode selector
+            // Close all dropdowns
+            document.querySelectorAll('.dropdown-content').forEach(d => {
+                d.classList.remove('show');
+            });
+
+            // Update mode selectors (both instances)
             const modeIcon = document.getElementById('modeIcon');
             const modeName = document.getElementById('modeName');
+            const modeIcon2 = document.getElementById('modeIcon2');
+            const modeName2 = document.getElementById('modeName2');
             const heroBadge = document.getElementById('heroBadge');
             const heroTitle = document.getElementById('heroTitle');
             const heroSubtitle = document.getElementById('heroSubtitle');
 
-            // Update active state in dropdown
+            // Update active state in all dropdowns
             document.querySelectorAll('.dropdown-item').forEach(item => {
                 item.classList.remove('active');
             });
@@ -848,21 +895,29 @@ I'll use AI to find, generate, and verify emails."></textarea>
             if (mode === 'verify') {
                 modeIcon.textContent = '⚡';
                 modeName.textContent = 'Quick Verify';
+                modeIcon2.textContent = '⚡';
+                modeName2.textContent = 'Quick Verify';
                 heroBadge.textContent = 'Quick Email Verification';
                 heroTitle.innerHTML = 'Verify Your<br><span>Email List</span>';
                 heroSubtitle.textContent = 'Paste your email list and instantly verify deliverability with deep SMTP checks. Get clean, validated contacts ready for your outreach.';
                 document.getElementById('verifyMode').style.display = 'block';
                 document.getElementById('researchMode').style.display = 'none';
-                document.querySelectorAll('.dropdown-item')[0].classList.add('active');
+                // Set active state for verify option in both dropdowns
+                document.querySelectorAll('#modeDropdown .dropdown-item')[0].classList.add('active');
+                document.querySelectorAll('#modeDropdown2 .dropdown-item')[0].classList.add('active');
             } else if (mode === 'research') {
                 modeIcon.textContent = '🧠';
                 modeName.textContent = 'Deep Research';
+                modeIcon2.textContent = '🧠';
+                modeName2.textContent = 'Deep Research';
                 heroBadge.textContent = 'AI-Powered Email Discovery';
                 heroTitle.innerHTML = 'Discover &<br><span>Verify Emails</span>';
                 heroSubtitle.textContent = 'Use AI to find emails, generate patterns, and verify deliverability. Just describe what you need in natural language.';
                 document.getElementById('verifyMode').style.display = 'none';
                 document.getElementById('researchMode').style.display = 'block';
-                document.querySelectorAll('.dropdown-item')[1].classList.add('active');
+                // Set active state for research option in both dropdowns
+                document.querySelectorAll('#modeDropdown .dropdown-item')[1].classList.add('active');
+                document.querySelectorAll('#modeDropdown2 .dropdown-item')[1].classList.add('active');
             }
 
             // Hide results
