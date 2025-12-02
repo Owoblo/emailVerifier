@@ -613,8 +613,109 @@
         }
 
         @media (max-width: 768px) {
+            body {
+                padding: 20px 16px;
+            }
+
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 12px;
+            }
+
+            .subtitle {
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
+
+            .hero {
+                margin-bottom: 30px;
+            }
+
+            .nav-pill {
+                margin-top: 10px;
+                margin-bottom: 20px;
+            }
+
+            .badge-announcement {
+                font-size: 0.8rem;
+                padding: 5px 14px;
+                margin-bottom: 20px;
+            }
+
+            /* Mobile: Stack control bar vertically */
+            .control-bar {
+                flex-direction: column;
+                gap: 10px;
+                padding-top: 10px;
+            }
+
+            .options {
+                width: 100%;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .option-pill, .mode-selector {
+                width: 100%;
+                justify-content: center;
+                font-size: 0.85rem;
+                padding: 10px 14px;
+            }
+
+            .mode-dropdown {
+                width: 100%;
+            }
+
+            .action-btn {
+                width: 100%;
+                padding: 14px 24px;
+                font-size: 1rem;
+                justify-content: center;
+            }
+
+            /* Dropdown positioning for mobile */
+            .dropdown-content {
+                left: 0;
+                right: 0;
+                width: 100%;
+            }
+
+            /* Results area mobile */
             .results-split {
                 grid-template-columns: 1fr;
+            }
+
+            .stats-row {
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .stat {
+                font-size: 0.85rem;
+            }
+
+            .copy-all-btn, .export-csv-btn {
+                font-size: 0.8rem;
+                padding: 8px 16px;
+            }
+
+            .input-wrapper {
+                border-radius: 20px;
+            }
+
+            .input-box {
+                border-radius: 16px;
+                padding: 12px 16px;
+            }
+
+            textarea {
+                font-size: 0.95rem;
+            }
+
+            /* API key input */
+            #apiKeyInput {
+                width: 100% !important;
+                font-size: 0.8rem !important;
             }
         }
     </style>
