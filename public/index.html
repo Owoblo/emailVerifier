@@ -42,7 +42,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            justify-content: center;
+            padding: 40px 20px;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -94,8 +95,8 @@
 
         .hero {
             text-align: center;
-            max-width: 800px;
-            margin-bottom: 30px;
+            max-width: 700px;
+            margin-bottom: 50px;
         }
 
         .badge-announcement {
@@ -121,11 +122,11 @@
 
         h1 {
             font-family: var(--font-heading);
-            font-size: 3.5rem;
-            line-height: 1.1;
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            margin-bottom: 20px;
+            font-size: 2.5rem;
+            line-height: 1.2;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
             color: var(--text-primary);
         }
 
@@ -135,9 +136,9 @@
 
         .subtitle {
             color: var(--text-secondary);
-            font-size: 1.15rem;
+            font-size: 1rem;
             line-height: 1.6;
-            max-width: 600px;
+            max-width: 500px;
             margin: 0 auto;
         }
 
@@ -177,62 +178,55 @@
             background: #f1f5f9;
         }
 
-        /* Main Interface Card */
-        .app-card {
-            background: var(--surface-white);
+        /* ChatGPT-style Input Container */
+        .input-container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .input-wrapper {
+            background: var(--surface-white);
+            border: 2px solid var(--border-subtle);
             border-radius: 24px;
-            padding: 12px;
+            padding: 4px;
             box-shadow: var(--shadow-soft);
-            border: 1px solid rgba(0,0,0,0.04);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
         }
 
-        .input-area {
-            background: #f8fafc;
-            border-radius: 16px;
-            padding: 20px;
-            border: 1px solid transparent;
-            transition: all 0.2s;
+        .input-wrapper:focus-within {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.1), var(--shadow-soft);
         }
 
-        .input-area:focus-within {
-            background: white;
-            border-color: var(--border-subtle);
-            box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.1);
-        }
-
-        .input-header {
+        .input-box {
             display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 12px;
+            flex-direction: column;
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 16px 20px;
+            min-height: 120px;
+            max-height: 600px;
+            transition: all 0.3s ease;
         }
 
-        .input-icon {
-            color: var(--accent-color);
-        }
-
-        .input-label {
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            color: var(--text-secondary);
+        .input-box.has-content {
+            min-height: 300px;
         }
 
         textarea {
             width: 100%;
-            min-height: 700px;
+            min-height: 80px;
             border: none;
             background: transparent;
             font-family: var(--font-body);
             font-size: 1rem;
             color: var(--text-primary);
-            resize: vertical;
+            resize: none;
             outline: none;
             line-height: 1.6;
+            overflow-y: auto;
         }
 
         textarea::placeholder {
@@ -244,7 +238,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 8px 8px 8px;
+            padding-top: 12px;
+            gap: 12px;
         }
 
         .options {
@@ -284,32 +279,36 @@
         }
 
         .action-btn {
-            background: var(--text-primary);
+            background: var(--accent-color);
             color: white;
             border: none;
-            width: 48px;
-            height: 48px;
-            border-radius: 16px;
+            padding: 12px 24px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 8px;
             cursor: pointer;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 600;
         }
 
         .action-btn:hover {
-            transform: scale(1.05);
-            background: black;
+            background: var(--accent-hover);
+            transform: translateY(-1px);
         }
 
         .action-btn:disabled {
             opacity: 0.7;
             cursor: not-allowed;
+            transform: none;
         }
 
         .action-btn svg {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             stroke: white;
             stroke-width: 2.5;
         }
@@ -555,31 +554,30 @@
         <p class="subtitle">Paste your email list and instantly verify deliverability with deep SMTP checks. Get clean, validated contacts ready for your outreach.</p>
     </div>
 
-    <!-- Quick Verify (Only Mode) -->
-    <div class="app-card">
-        <div class="input-area">
-            <div class="input-header">
-                <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                <span class="input-label">EMAIL LIST</span>
-            </div>
-            <textarea id="emailList" placeholder="Paste your email list here to verify...&#10;john@example.com&#10;sarah@company.com&#10;mike@business.net&#10;&#10;One email per line or comma-separated."></textarea>
-        </div>
+    <!-- ChatGPT-style Input -->
+    <div class="input-container">
+        <div class="input-wrapper">
+            <div class="input-box" id="inputBox">
+                <textarea id="emailList" placeholder="Paste your email list here..."></textarea>
 
-        <div class="control-bar">
-            <div class="options">
-                <div class="option-pill">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                    <select id="verifyLevel">
-                        <option value="smtp" selected>Deep SMTP Check</option>
-                        <option value="dns">DNS Check</option>
-                        <option value="syntax">Syntax Only</option>
-                    </select>
+                <div class="control-bar">
+                    <div class="options">
+                        <div class="option-pill">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                            <select id="verifyLevel">
+                                <option value="smtp" selected>Deep SMTP</option>
+                                <option value="dns">DNS Check</option>
+                                <option value="syntax">Syntax</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button id="verifyBtn" class="action-btn" onclick="verifyEmails()" title="Verify Emails">
+                        <span>Verify</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
                 </div>
             </div>
-
-            <button id="verifyBtn" class="action-btn" onclick="verifyEmails()" title="Verify Emails">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
-            </button>
         </div>
     </div>
 
@@ -636,6 +634,23 @@
     <script>
         let verifiedEmails = [];
 
+        // Auto-expand textarea when content is pasted
+        const textarea = document.getElementById('emailList');
+        const inputBox = document.getElementById('inputBox');
+
+        textarea.addEventListener('input', function() {
+            // Auto-expand textarea
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 500) + 'px';
+
+            // Add class to expand container when there's content
+            if (this.value.trim().length > 0) {
+                inputBox.classList.add('has-content');
+            } else {
+                inputBox.classList.remove('has-content');
+            }
+        });
+
         async function verifyEmails() {
             const emailList = document.getElementById('emailList').value.trim();
             const level = document.getElementById('verifyLevel').value;
@@ -644,7 +659,7 @@
             if (!emailList) return;
 
             btn.disabled = true;
-            btn.innerHTML = '<svg class="spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>';
+            btn.innerHTML = '<svg class="spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg><span>Verifying...</span>';
 
             try {
                 const response = await fetch('/api/verify', {
@@ -661,7 +676,7 @@
                 alert('Error: ' + error.message);
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>';
+                btn.innerHTML = '<span>Verify</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
             }
         }
 
