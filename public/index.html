@@ -613,109 +613,69 @@
         }
 
         @media (max-width: 768px) {
-            body {
-                padding: 20px 16px;
-            }
-
-            h1 {
-                font-size: 2rem;
-                margin-bottom: 12px;
-            }
-
-            .subtitle {
-                font-size: 0.9rem;
-                line-height: 1.5;
-            }
-
-            .hero {
-                margin-bottom: 30px;
-            }
-
-            .nav-pill {
-                margin-top: 10px;
-                margin-bottom: 20px;
-            }
-
-            .badge-announcement {
-                font-size: 0.8rem;
-                padding: 5px 14px;
-                margin-bottom: 20px;
-            }
-
-            /* Mobile: Stack control bar vertically */
+            /* Input box controls - ChatGPT style */
             .control-bar {
-                flex-direction: column;
-                gap: 10px;
+                gap: 6px;
                 padding-top: 10px;
+                flex-wrap: wrap;
             }
 
             .options {
-                width: 100%;
-                flex-direction: column;
-                gap: 8px;
+                gap: 6px;
+                flex-wrap: wrap;
+                flex: 1;
             }
 
             .option-pill, .mode-selector {
-                width: 100%;
-                justify-content: center;
-                font-size: 0.85rem;
-                padding: 10px 14px;
+                font-size: 0.75rem;
+                padding: 7px 11px;
+                white-space: nowrap;
             }
 
-            .mode-dropdown {
-                width: 100%;
+            .mode-selector {
+                gap: 4px;
+            }
+
+            .mode-icon {
+                font-size: 0.9rem;
+            }
+
+            .mode-arrow {
+                font-size: 0.7rem;
+            }
+
+            select {
+                font-size: 0.75rem;
             }
 
             .action-btn {
-                width: 100%;
-                padding: 14px 24px;
-                font-size: 1rem;
-                justify-content: center;
+                padding: 9px 18px;
+                font-size: 0.875rem;
+                border-radius: 10px;
             }
 
-            /* Dropdown positioning for mobile */
+            .action-btn svg {
+                width: 16px;
+                height: 16px;
+            }
+
             .dropdown-content {
-                left: 0;
-                right: 0;
-                width: 100%;
-            }
-
-            /* Results area mobile */
-            .results-split {
-                grid-template-columns: 1fr;
-            }
-
-            .stats-row {
-                flex-wrap: wrap;
-                gap: 12px;
-            }
-
-            .stat {
-                font-size: 0.85rem;
-            }
-
-            .copy-all-btn, .export-csv-btn {
-                font-size: 0.8rem;
-                padding: 8px 16px;
-            }
-
-            .input-wrapper {
-                border-radius: 20px;
-            }
-
-            .input-box {
-                border-radius: 16px;
-                padding: 12px 16px;
+                width: calc(100vw - 40px);
+                max-width: 280px;
             }
 
             textarea {
-                font-size: 0.95rem;
+                min-height: 50px;
             }
 
-            /* API key input */
             #apiKeyInput {
-                width: 100% !important;
-                font-size: 0.8rem !important;
+                width: 120px !important;
+                font-size: 0.7rem !important;
+            }
+
+            /* Results area */
+            .results-split {
+                grid-template-columns: 1fr;
             }
         }
     </style>
